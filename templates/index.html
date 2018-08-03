@@ -10,41 +10,68 @@
     <meta name="author" content="Manuel Santos Jorge">
 
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-    <link rel="stylesheet" href="{{url_for('static',filename='font-awesome/css/font-awesome.min.css')}}">
 
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
     <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
     <script src="{{url_for('static', filename='js/script.js')}}"></script>
 </head>
 <body>
     <form class="container">
-        <div class="panel-heading">
-            <h3 class="panel-title">Buscar información de Ley 103</h3>
-        </div>
-        <div class="panel-body">
-            <select class="form-control" name="month">
-                <option></option>
-                <option value="01">Enero</option>
-                <option value="02">Febrero</option>
-                <option value="03">Marzo</option>
-                <option value="04">Abril</option>
-                <option value="05">Mayo</option>
-                <option value="06">Junio</option>
-                <option value="07">Julio</option>
-                <option value="08">Agosto</option>
-                <option value="09">Septiembre</option>
-                <option value="10">Octubre</option>
-                <option value="11">Noviembre</option>
-                <option value="12">Diciembre</option>
-            </select>
-            <select class="form-control" name="year">
-                {% for data in payload.years %}
-                <option value="{{data}}">{{data}}</option>
-                {% endfor %}
-            </select>
-        </div>
-        <div class="panel-footer">
-            <input class="btn btn-primary btn-lg" name="search" value='Buscar' />
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">Buscar información de Ley 103</h3>
+            </div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-lg-6">
+                        <label for="month">Month</label>
+                        <select class="form-control" name="month">
+                            <option></option>
+                            <option value="01">Enero</option>
+                            <option value="02">Febrero</option>
+                            <option value="03">Marzo</option>
+                            <option value="04">Abril</option>
+                            <option value="05">Mayo</option>
+                            <option value="06">Junio</option>
+                            <option value="07">Julio</option>
+                            <option value="08">Agosto</option>
+                            <option value="09">Septiembre</option>
+                            <option value="10">Octubre</option>
+                            <option value="11">Noviembre</option>
+                            <option value="12">Diciembre</option>
+                        </select>
+                    </div>
+                    <div class="col-lg-6">
+                        <label for="year">Year</label>
+                        <select class="form-control" name="year">
+                            {% for data in payload.years %}
+                            <option value="{{data}}">{{data}}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="panel-footer">
+                <input class="btn btn-primary btn-lg" name="search" value='Buscar' />
+                <a class="btn btn-success btn-lg" name="downloadtxt" href="/download/txt" style="display:none;">Download TXT</a>
+                <a class="btn btn-warning btn-lg" href="/download/csv" style="display:none;">Download CSV</a>
+            </div>
+            <table class="table" style="display: none" name="tableResult">
+                <thead>
+                <tr>
+                    <th>NU_ENTIDAD</th>
+                    <th>RG_TRANS</th>
+                    <th>RG_COL</th>
+                    <th>RG_ROW</th>
+                    <th>RG_VALUE</th>
+                    <th>CYYYYMM</th>
+                    <th>TRANS_FILETYPE</th>
+                </tr>
+                </thead>
+                <tbody>
+
+                </tbody>
+            </table>
         </div>
     </form>
 </body>

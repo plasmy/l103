@@ -6,12 +6,9 @@ l103Blueprint = Blueprint('l103', __name__)
 
 
 @l103Blueprint.route('/l103', methods=['GET'])
-def inventory():
-    #l103Data = Ley103Data.ley103DataFactory('2007', '01')
-
+def searchForm():
     payload = {
         'years': generateYears(2007)
-        #'data': l103Data.dataResult
     }
 
     return render_template('index.html', payload=payload)
@@ -19,8 +16,18 @@ def inventory():
 
 @l103Blueprint.route('/l103/<string:year>', defaults={'month': None}, methods=['GET'])
 @l103Blueprint.route('/l103/<string:year>/<string:month>', methods=['GET'])
-def inventory(year, month):
+def search(year, month):
+    print('In')
     l103Data = Ley103Data.ley103DataFactory(year, month)
+    print('Found')
+
+    '''Open files'''
+    ftxt = open('./outputs/data.txt', 'w+')
+    fcsv = open('./outputs/data.csv', 'w+')
+
+    '''Write data to files'''
+    ftxt.write(l103Data.fileString)
+    fcsv.write(l103Data.fileString)
 
     return jsonify(l103Data.dataResult)
 

@@ -4,8 +4,10 @@ import datetime
 
 l103Blueprint = Blueprint('l103', __name__)
 
+'''Initial page. Shows the search form'''
 
-@l103Blueprint.route('/l103', methods=['GET'])
+
+@l103Blueprint.route('/', methods=['GET'])
 def searchForm():
     payload = {
         'years': generateYears(2007)
@@ -14,22 +16,18 @@ def searchForm():
     return render_template('index.html', payload=payload)
 
 
+'''API where the data is obtained. Receives year and month is an optional parameter'''
+
+
 @l103Blueprint.route('/l103/<string:year>', defaults={'month': None}, methods=['GET'])
 @l103Blueprint.route('/l103/<string:year>/<string:month>', methods=['GET'])
 def search(year, month):
-    print('In')
     l103Data = Ley103Data.ley103DataFactory(year, month)
-    print('Found')
-
-    '''Open files'''
-    ftxt = open('./outputs/data.txt', 'w+')
-    fcsv = open('./outputs/data.csv', 'w+')
-
-    '''Write data to files'''
-    ftxt.write(l103Data.fileString)
-    fcsv.write(l103Data.fileString)
 
     return jsonify(l103Data.dataResult)
+
+
+'''Creates a list of years starting from the current year to 2007'''
 
 
 def generateYears(lastYear):

@@ -16,7 +16,7 @@
     <script src="{{url_for('static', filename='js/script.js')}}"></script>
 </head>
 <body>
-    <form class="container">
+    <form method="post" action="/download" id="searchForm" class="container">
         <div class="panel panel-default">
             <div class="panel-heading">
                 <h3 class="panel-title">Buscar información de Ley 103</h3>
@@ -24,7 +24,7 @@
             <div class="panel-body">
                 <div class="row">
                     <div class="col-lg-6">
-                        <label for="month">Month</label>
+                        <label for="month">Mes</label>
                         <select class="form-control" name="month">
                             <option></option>
                             <option value="01">Enero</option>
@@ -42,7 +42,7 @@
                         </select>
                     </div>
                     <div class="col-lg-6">
-                        <label for="year">Year</label>
+                        <label for="year">Año</label>
                         <select class="form-control" name="year">
                             {% for data in payload.years %}
                             <option value="{{data}}">{{data}}</option>
@@ -50,11 +50,20 @@
                         </select>
                     </div>
                 </div>
+                <br>
+                <div class="row">
+                    <div class="col-md-offset-4 col-md-4">
+                        <label for="format">Formato de Archivo</label>
+                        <select class="form-control" name="format">
+                            <option value="txt">Texto</option>
+                            <option value="csv">CSV</option>
+                        </select>
+                    </div>
+                </div>
             </div>
             <div class="panel-footer">
                 <input class="btn btn-primary btn-lg" name="search" value='Buscar' />
-                <a class="btn btn-success btn-lg" name="downloadtxt" href="/download/txt" style="display:none;">Download TXT</a>
-                <a class="btn btn-warning btn-lg" href="/download/csv" style="display:none;">Download CSV</a>
+                <input type="submit" class="btn btn-success btn-lg" name="download" style="display:none;" value="Descargar Archivo">
             </div>
             <table class="table" style="display: none" name="tableResult">
                 <thead>
@@ -69,7 +78,6 @@
                 </tr>
                 </thead>
                 <tbody>
-
                 </tbody>
             </table>
         </div>

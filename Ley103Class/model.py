@@ -10,6 +10,7 @@ class Ley103Data:
         self.dataResult = []
         self.fileString = ''
 
+    '''Factory that creates an object of this class filled with the data received from the SOAP'''
     @staticmethod
     def ley103DataFactory(year, month=None):
         ley103DataObject = Ley103Data(year, month)
@@ -29,8 +30,9 @@ class Ley103Data:
         result = client.service.DatosLey103Mes(self.year, self.month)
         self.saveData(result)
 
+    '''Read the data in the SOAP and prepare for displaying in the HTML. Create the string variable
+    that will be used for creating the file'''
     def saveData(self, result):
-        count = 0
         for data in result._value_1._value_1:
             for key, value in data.items():
                 dataDict = {
@@ -48,6 +50,3 @@ class Ley103Data:
                 self.fileString += "\n"
 
                 self.dataResult.append(dataDict)
-                count += 1
-                if count == 10:
-                    return

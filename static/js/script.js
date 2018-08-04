@@ -1,22 +1,20 @@
 $(document).ready(function(){
     //Code for the search button
     $('[name=search]').click(function(){
-        $('[name=downloadtxt]').show();
-        $('[name=tableResult]').show();
         var month = $('[name=month]').val();
         var year = $('[name=year]').val();
 
+        //Construct url where the data will be obtained
         var urlSearch = '/l103/' + year;
         if(month)
             urlSearch += '/' + month;
 
-        console.log(urlSearch);
-
         $.get(urlSearch, function(response){
-            console.log(response)
-            $('[name=tableResult] tbody tr').remove();
+            $('[name=download]').show(); //Show download button
+            $('[name=tableResult]').show(); //Show table with data
+            $('[name=tableResult] tbody tr').remove(); //Remove existing data in the table
 
-            //Create table columns with data and add to row
+            //Create table columns with data and add to row, then to table
             $.each(response, function(key, value){
                 var tr = $("<tr>");
                 var td =
@@ -29,7 +27,7 @@ $(document).ready(function(){
                 '<td>' + value.TRANS_FILETYPE + '</td>'
 
                 tr.append($(td));
-                $('[name=tableResult] tbody').append(tr); //
+                $('[name=tableResult] tbody').append(tr);
             });
         });
     });

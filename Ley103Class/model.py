@@ -44,9 +44,27 @@ class Ley103Data:
                     'CYYYYMM': str(value.CYYYYMM),
                     'TRANS_FILETYPE': str(value.TRANS_FILETYPE)
                 }
-
-                '''Write data as string to later write in file'''
-                self.fileString += ",".join(dataDict.values())
-                self.fileString += "\n"
-
                 self.dataResult.append(dataDict)
+
+    '''Write data as string to later write in file'''
+    def getTextFileData(self):
+        fileDelimiter = "\t"
+        self.getFileData(fileDelimiter)
+
+    def getCSVFileData(self):
+        fileDelimiter = ","
+        self.getFileData(fileDelimiter)
+
+    def getFileData(self, delimiter):
+        """Headers"""
+        self.fileString += delimiter.join(['NU_ENTIDAD', 'RG_TRANS', 'RG_COL', 'RG_ROW', 'RG_VALUE', 'CYYYYMM', 'TRANS_FILETYPE'])
+        self.fileString += "\n"
+        for data in self.dataResult:
+            self.fileString += delimiter.join(data.values())
+            self.fileString += "\n"
+
+    def getFileString(self):
+        return self.fileString
+
+    def getData(self):
+        return self.dataResult

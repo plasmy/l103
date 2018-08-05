@@ -1,0 +1,6 @@
+.DS_Store
+.idea
+run.py
+run_api.py
+/easyjobs
+__pycache__

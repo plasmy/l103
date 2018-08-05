@@ -24,7 +24,7 @@ def searchForm():
 def search(year, month):
     l103Data = Ley103Data.ley103DataFactory(year, month)
 
-    return jsonify(l103Data.dataResult)
+    return jsonify(l103Data.getData())
 
 
 '''Creates a list of years starting from the current year to 2007'''

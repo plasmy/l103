@@ -15,14 +15,18 @@ def download():
         'mime': 'text/plain',
         'name': 'data.txt'
     }
-    if values['format'] == 'csv':
-        fileSettings['mime'] = 'text/csv'
-        fileSettings['name'] = 'data.csv'
 
     '''Get data from SOAP'''
     l103Data = Ley103Data.ley103DataFactory(values['year'], values['month'])
 
+    if values['format'] == 'csv':
+        fileSettings['mime'] = 'text/csv'
+        fileSettings['name'] = 'data.csv'
+        l103Data.getCSVFileData()
+    else:
+        l103Data.getTextFileData()
+
     '''Create the appropiate response to download the file.'''
-    response = app.response_class(l103Data.fileString, mimetype=fileSettings['mime'])
+    response = app.response_class(l103Data.getFileString(), mimetype=fileSettings['mime'])
     response.headers["Content-Disposition"] = "attachment; filename=" + fileSettings['name']
     return response

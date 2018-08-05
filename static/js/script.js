@@ -1,6 +1,7 @@
 $(document).ready(function(){
     //Code for the search button
     $('[name=search]').click(function(){
+        $('body').addClass("loading");
         var month = $('[name=month]').val();
         var year = $('[name=year]').val();
 
@@ -29,6 +30,7 @@ $(document).ready(function(){
                 tr.append($(td));
                 $('[name=tableResult] tbody').append(tr);
             });
+            $('body').removeClass("loading");
         });
     });
 });

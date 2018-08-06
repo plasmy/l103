@@ -1,4 +1,4 @@
-var pageCount = 2;
+var pageCount;
 var dataResponse;
 
 $(document).ready(function(){
@@ -15,8 +15,8 @@ $(document).ready(function(){
 
         $.get(urlSearch, function(response){
             dataResponse = response;
-            pageCount = response.length / 10; //Amount of pages in pagination. Each page has 10 rows.
-            paginate();
+            pageCount = Math.ceil(response.length / 10); //Amount of pages in pagination. Each page has 10 rows.
+            paginate(0);
             $('[name=download]').show(); //Show download button
             $('[name=tableResult]').show(); //Show table with data
 
@@ -28,15 +28,50 @@ $(document).ready(function(){
     });
 
     //Create Pagination of table
-    function paginate(){
-        console.log('Hey')
-        for(var i = 0; i < pageCount; i++){
-            var page = $("<li><a href='#' value='" + (i * 10) + "'>" + (i + 1) + "</a></li>");
+    function paginate(clickedPage){
+        console.log('Perform');
+        $('.pagination li').remove();
+
+        var startingPage = (pageCount - 10) <= clickedPage ? parseInt(pageCount - 10) : parseInt(clickedPage);
+        var endingPage = parseInt(startingPage + 10);
+
+        console.log(startingPage);
+        console.log(endingPage);
+
+        //Add button to go to first page
+        if(startingPage > 0){
+            var firstPage = $('<li><a href="#">1</a></li>');
+            firstPage.click(function(e){
+                var startingIndex = 0
+                paginate($(e.target).html())
+                loadPage(startingIndex);
+            });
+            $('.pagination').append($(firstPage));
+            $('.pagination').append($('<li><a href="#">.....</a></li>'));
+        }
+
+        for(var i = startingPage; i < endingPage; i++){
+            console.log('For execution||' + i);
+            var page = $("<li><a href='#'>" + (i + 1) + "</a></li>");
             page.click(function(e){
                 var startingIndex = ($(e.target).html() - 1) * 10;
+                paginate($(e.target).html())
                 loadPage(startingIndex);
             });
             $('.pagination').append(page);
+            if(i + 1 == pageCount) break;
+        }
+
+        //Add button to go to last page
+        if(pageCount > 10 && (pageCount - 10) > endingPage){
+            $('.pagination').append($('<li><a href="#">.....</a></li>'));
+            var lastPage = $('<li><a href="#">' + pageCount + '</a></li>');
+            lastPage.click(function(e){
+                var startingIndex = ($(e.target).html() - 1) * 10;
+                paginate($(e.target).html())
+                loadPage(startingIndex);
+            });
+            $('.pagination').append($(lastPage));
         }
     }
 

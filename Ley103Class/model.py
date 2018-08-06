@@ -58,10 +58,10 @@ class Ley103Data:
     def getFileData(self, delimiter):
         """Headers"""
         self.fileString += delimiter.join(['NU_ENTIDAD', 'RG_TRANS', 'RG_COL', 'RG_ROW', 'RG_VALUE', 'CYYYYMM', 'TRANS_FILETYPE'])
-        self.fileString += "\n"
+        self.fileString += "\r\n"
         for data in self.dataResult:
             self.fileString += delimiter.join(data.values())
-            self.fileString += "\n"
+            self.fileString += "\r\n"
 
     def getFileString(self):
         return self.fileString
